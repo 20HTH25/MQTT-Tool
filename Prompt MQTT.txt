@@ -1,0 +1,19 @@
+MQTT-Tool
+
+Ein Programm, das MQTT-Daten an einen Broker sendet. In einem Eingabefenster soll folgendes eingestellt werden können:
+
+IP-Adresse MQTT-Server
+Port des MQTT-Servers
+Name des MQTT-User
+Passwort MQTT-User
+
+Checkbox: Retain
+Dropdown QoS (0,1,2)
+Dropdown Heartbeat (nie, 10 s, 30 s, 1 min, 5 min, 10 min, 15 min): Topic und Payload sollen in zyklischen Abständen gesendet werden, auch wenn sich die Payload in diesem Zeitraum nicht ändert
+
+Eingabefeld Topic
+Eingabefeld Payload
+Checkbox Payload-Änderung (nie, 10 s, 30 s, 1 min, 5 min, 10 min, 15 min, 30 min, 60 min). die Payload soll automatisch, nach der ausgewählten, Zeit in einen beliebigen Wert im Bereich der Payload-Range geändert werden (wenn es sich bei der Payload um eine Zahl handelt)
+Payload-Range: von xx bis yy (wenn xx=yy, dann ist die Payload konstant, soll aber trotzdem nach der ausgewählten Zeit gesendet werden)
+
+

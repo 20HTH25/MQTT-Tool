@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# Build / Release-Artefakte
+build/
+dist/
+release/
+*.app/
+
+# PyInstaller (wird beim Build neu erzeugt)
+MQTT-Tool.spec
+
+# Lokale Vorlagen & Einstellungen (können Zugangsdaten enthalten)
+preferences.json
+MQTT-Tool-Vorlagen.json
+ui-settings.json
+
+# Optional große Quell-Icons (app.icns bleibt versioniert)
+# icon.png
+# icon_transparent.png
