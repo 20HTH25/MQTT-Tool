@@ -844,6 +844,25 @@ class MQTTToolApp:
         self.status_text.set(f"Gesendet an {sent} Topic(s)")
         self._log(f"Gesendet an {sent} Topic(s)", category="Senden")
 
+    def _publish_single_topic(self, topic: str, payload: str) -> None:
+        """Sendet ein einzelnes Topic sofort, falls verbunden."""
+        topic = topic.strip()
+        if not topic:
+            return
+        if not self.connected or self.client is None:
+            self._log(f"Sofort-Senden übersprungen (nicht verbunden): {topic}", category="Senden")
+            return
+
+        qos = int(self.qos.get())
+        retain = self.retain.get()
+        result = self.client.publish(topic, payload, qos=qos, retain=retain)
+        if result.rc == mqtt.MQTT_ERR_SUCCESS:
+            self.status_text.set(f"Gesendet: {topic}")
+            self._log(f"Sofort gesendet: {topic} = {payload}", category="Senden")
+        else:
+            self.status_text.set(f"Senden fehlgeschlagen: {topic}")
+            self._log(f"Sofort-Senden fehlgeschlagen: {topic}", category="Fehler")
+
     def _publish_heartbeat(self) -> None:
         if self._get_topic_payloads():
             self.publish_once()
@@ -1892,6 +1911,7 @@ class MQTTToolApp:
         self._restart_payload_change()
         if topic:
             self._log(f"Topic hinzugefügt: {topic}", category="Topic")
+            self._publish_single_topic(topic, payload)
 
     def edit_selected_topic_row(self) -> None:
         selected = self.topic_tree.selection()
@@ -1925,6 +1945,7 @@ class MQTTToolApp:
         self._update_range_visibility()
         self._restart_payload_change()
         self._log(f"Topic bearbeitet: {topic}", category="Topic")
+        self._publish_single_topic(topic, payload)
 
     def remove_selected_topic_row(self) -> None:
         selected = self.topic_tree.selection()
